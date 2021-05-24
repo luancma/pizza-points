@@ -32,7 +32,7 @@ export default function Detalhes({ propsResponse }) {
     if (step.currentStep === 1) {
       return step.incrementStep();
     }
-  }, [step.currentStep]);
+  }, []);
 
   return (
     <Box

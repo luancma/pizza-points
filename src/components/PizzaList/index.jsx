@@ -16,33 +16,33 @@ export function PizzaList() {
     });
   };
 
+
+  if (isLoading && !data?.flavors) {
+    return (
+      <Box fill align="center" justify="center" pad="large">
+        <Spinner size="large" />
+      </Box>
+    );
+  }
+
   return (
-    <>
-      {isLoading && !data ? (
-        <Box>
-          <Spinner />
+    <Box direction="column" justify="center" fill margin={{ vertical: "2rem" }}>
+      <Box direction="column" justify="center">
+        <Box height="xxsmall">
+          <Text size="xlarge" textAlign="center">
+            <b>Lista de pizzas</b>
+          </Text>
         </Box>
-      ) : (
-        <Box
-          direction="column"
-          justify="center"
-          fill
-          margin={{ vertical: "2rem" }}
-        >
-          <Box direction="column" justify="center">
-            <Box height="xxsmall">
-              <Text size="xlarge" textAlign="center">
-                <b>Lista de pizzas</b>
-              </Text>
-            </Box>
-            <GridTemplateList>
-              {data?.flavors.map((flavor) => (
-                <PizzaCard key={flavor.slug} flavor={flavor} handleClickCard={handleClickCard} />
-              ))}
-            </GridTemplateList>
-          </Box>
-        </Box>
-      )}
-    </>
+        <GridTemplateList>
+          {data.flavors.map((flavor) => (
+            <PizzaCard
+              key={flavor.slug}
+              flavor={flavor}
+              handleClickCard={handleClickCard}
+            />
+          ))}
+        </GridTemplateList>
+      </Box>
+    </Box>
   );
 }
