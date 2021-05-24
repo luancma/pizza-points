@@ -13,13 +13,19 @@ import { PizzaDetailsWrapper } from "../../../styles/PizzaDetailsWrapper";
 export default function Detalhes({ propsResponse }) {
   const router = useRouter();
 
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   const { data: pizzas } = usePizzas({
     initialData: propsResponse.pizzas,
   });
 
   const { step } = useContext(ProjectContext);
 
-  const linked = propsResponse.flavor.linked.map((item) => pizzas.flavors[item]);
+  const linked = propsResponse.flavor.linked.map(
+    (item) => pizzas.flavors[item]
+  );
 
   const handleClickCard = (slug) => {
     router.push({
@@ -77,7 +83,7 @@ export async function getStaticPaths() {
     params: { slug: pizza.slug },
   }));
 
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 }
 
 export async function getStaticProps({ params }) {
@@ -95,5 +101,5 @@ export async function getStaticProps({ params }) {
     pizzas: response,
   };
 
-  return { props: { propsResponse } };
+  return { props: { propsResponse }, revalidate: 60 * 24 };
 }
