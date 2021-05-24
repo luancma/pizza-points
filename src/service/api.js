@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: "https://my-json-server.typicode.com/luancma/json-server"
+    baseURL: "http://localhost:3001"
 })  

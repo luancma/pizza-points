@@ -35,11 +35,6 @@ export function ModalConfirmOrder({ closeModal, confirmModal }) {
     }
   );
 
-  const validateDate = useCallback(
-    () => validateToday(user.lastValidation),
-    [user.lastValidation]
-  );
-
   const confirmItem = () => {
     const dailyID = pizzaData.daily[0];
     const promotionPizzaSlug = pizzaData.flavors.filter(
