@@ -46,9 +46,7 @@ export function ModalConfirmOrder({ closeModal, confirmModal }) {
       (flavor) => flavor.id === dailyID
     )[0].slug;
 
-    const validationDailyPizza =
-      promotionPizzaSlug === router.query.slug &&
-      !validateDate(user.lastValidation);
+    const validationDailyPizza = promotionPizzaSlug === router.query.slug;
 
     if (!isFetchingUser && user && validationDailyPizza) {
       const updateUser = async () => updateUserPoints.mutateAsync(user);
