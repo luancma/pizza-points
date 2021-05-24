@@ -13,7 +13,7 @@ export default function Home({ propsResponse }) {
     async () => api.get("/pizzas").then((response) => response.data),
     {
       initialData: propsResponse.pizzas,
-    } 
+    }
   );
 
   useEffect(() => {
