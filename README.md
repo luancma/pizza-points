@@ -28,6 +28,7 @@ yarn next dev
 - Confirmação de compra com limpeza de valores de borda e tamanho.
 
 ### Issues
+- [ ] Primeiro render da página de detalhes não trazendo os dados de forma correta ( Sendo necessário dar um f5 )
 - [ ] O usuário deve ter a opção de modificar os ingredientes da pizza ( remover e adicionar itens ).
 - [ ]  Loader no index rodando o conteúdo dentro do spinner.
 - [ ] Adaptar 100% do app para mobile
