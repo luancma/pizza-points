@@ -3,15 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "json-server": "json-server --watch ./json-server/pizzas.json --port 3001",
     "dev": "next dev",
-    "build": "concurrently \"yarn next build\" \"yarn run json-server\"",
-    "start": "concurrently \"yarn next start\" \"yarn run json-server\""
-
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "concurrently": "^6.1.0",
     "eslint": "^7.27.0",
     "grommet": "^2.17.2",
     "grommet-icons": "^4.5.0",
