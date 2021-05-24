@@ -18,8 +18,8 @@ yarn next dev
 [Backend - JSON-server](https://pizza-score.herokuapp.com/)
 
 
-## Features
-
+### Features
+- Resetar os dados com contador de pontos /reset
 - Compra feita em 3 etapas ( Escolha do sabor, escolha do tamanho e escolha da borda ).
 - Produto com oferta do dia vindo do backend.
 - Pizzas relacionadas vindo do backend são mostradas nos detalhes de um sabor.
