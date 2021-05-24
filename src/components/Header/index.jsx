@@ -12,24 +12,26 @@ export function Header() {
 
   return (
     <GrommetHeader background="dark-1" pad="medium">
-      <Heading
+      <Text
         onClick={() => router.push("/")}
-        size="small"
+        size="medium"
         style={{ cursor: "pointer" }}
       >
         Web-Pizza
-      </Heading>
+      </Text>
 
       <Box>
         <Text>Etapa: {step.currentStep}/3</Text>
       </Box>
 
       <Box>
-        <Box display="flex" direction="row">
+        <Box display="flex" direction="row" justify="end">
           <Achievement style={{ marginRight: "8px" }} />
-          Pontos de Fidelidade:
+          <Text size="medium" textAlign="end">
+            Pontos de Fidelidade:
+          </Text>
         </Box>
-        <Text textAlign="end">
+        <Text size="medium" textAlign="end">
           {user?.id ? `${user?.points} pontos` : "Carregando..."}
         </Text>
       </Box>

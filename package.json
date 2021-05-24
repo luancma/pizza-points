@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "eslint": "^7.27.0",
     "grommet": "^2.17.2",
     "grommet-icons": "^4.5.0",
     "next": "10.2.1",

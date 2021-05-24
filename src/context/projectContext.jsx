@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { useRouter } from "next/router";
 
 function useStickyState(defaultValue, key) {
@@ -28,9 +28,23 @@ export function ProjectContextProvider({ children }) {
 
   const [steps, setSteps] = useStickyState(1, "steps");
 
-  const [size, setSize] = useStickyState("Pequena - Pizza brotinho!", "size");
+  const [size, setSize] = useStickyState(
+    {
+      name: "Pequena - Pizza brotinho!",
+      price: 10,
+      slug: "pequena",
+    },
+    "size"
+  );
 
-  const [border, setBorder] = useStickyState("", "border");
+  const [border, setBorder] = useStickyState(
+    {
+      name: "Sem recheio",
+      price: 0,
+      slug: "normal",
+    },
+    "border"
+  );
 
   const options = {
     2: [
@@ -87,9 +101,6 @@ export function ProjectContextProvider({ children }) {
   const incrementScore = (points) => setScore(score + points);
 
   const incrementStep = () => {
-    if (steps === 3) {
-      return console.log("Abrir uma modal");
-    }
     setSteps(steps + 1);
   };
 
@@ -101,11 +112,32 @@ export function ProjectContextProvider({ children }) {
       router.push({
         pathname: "/",
       });
-      return setSteps(steps - 1);
     }
   };
 
   const resetStep = () => setSteps(1);
+
+  const getTotalPriceByFlavor = (flavorSlug) => {
+    const currentOrder = [flavorSlug, size, border];
+    let totalPrice = 0;
+    for (const iterator of currentOrder) {
+      totalPrice += iterator["price"];
+    }
+    return totalPrice;
+  };
+
+  const setResetPizzaSteps = () => {
+    setSize({
+      name: "Pequena - Pizza brotinho!",
+      price: 10,
+      slug: "pequena",
+    });
+    setBorder({
+      name: "Sem recheio",
+      price: 0,
+      slug: "normal",
+    });
+  };
 
   const store = {
     score: {
@@ -127,13 +159,11 @@ export function ProjectContextProvider({ children }) {
       setBorder,
     },
     options,
+    order: {
+      getTotalPriceByFlavor,
+      setResetPizzaSteps
+    },
   };
-
-  // useEffect(() => {
-  //   if (steps === 1) {
-  //     return router.push("/");
-  //   }
-  // }, [steps]);
 
   return (
     <ProjectContext.Provider value={store}>{children}</ProjectContext.Provider>

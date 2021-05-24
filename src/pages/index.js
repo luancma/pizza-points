@@ -1,5 +1,3 @@
-import { Box, Stack, Text } from "grommet";
-import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import { useQuery } from "react-query";
 import { PizzaList } from "../components/PizzaList";
@@ -8,13 +6,21 @@ import { ProjectContext } from "../context/projectContext";
 import { api } from "../service/api";
 
 export default function Home({ propsResponse }) {
+  const store = useContext(ProjectContext);
+
   useQuery(
     "pizzas",
     async () => api.get("/pizzas").then((response) => response.data),
     {
       initialData: propsResponse.pizzas,
-    }
+    } 
   );
+
+  useEffect(() => {
+    if (store.step.currentStep > 1) {
+      store.step.resetStep();
+    }
+  }, []);
 
   return (
     <>

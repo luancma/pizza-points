@@ -5,7 +5,7 @@ import { ProjectContext } from "../../context/projectContext";
 import { usePizzas } from "../../service/hooks/usePizzas";
 
 export function Bill() {
-  const { step, pizzaSize, pizzaBorder, options } = useContext(ProjectContext);
+  const { pizzaSize, pizzaBorder, options } = useContext(ProjectContext);
   const { isFetched, data: pizzas } = usePizzas([]);
   const [flavor, setFlavor] = useState("");
   const [currentSize, setCurrentSize] = useState({});
@@ -22,49 +22,66 @@ export function Bill() {
 
   useEffect(() => {
     setCurrentSize(
-      options[2].filter((sizes) => sizes.name === pizzaSize.size && sizes)[0]
+      options[2].filter(
+        (sizes) => sizes.name === pizzaSize.size.name && sizes
+      )[0]
     );
   }, [pizzaSize.size]);
 
   useEffect(() => {
     setCurrentBorder(
       options[3].filter(
-        (border) => border.name === pizzaBorder.border && border
+        (border) => border.name === pizzaBorder.border.name && border
       )[0]
     );
   }, [pizzaBorder.border]);
 
   return (
     <Box>
-      <Heading>Resumo do Pedido</Heading>
+      <Box margin="xxsmall">
+        <Text size="xlarge" textAlign="center">
+          <b>Detalhes do seu peido</b>{" "}
+        </Text>
+      </Box>
+
       {isFetched && (
         <>
           {flavor && (
-            <Text>
-              {flavor?.name}{" "}
-              {new Intl.NumberFormat("pt-BR", {
+            <Box margin={{ vertical: "small" }}>
+              <Text>
+                <b>Sabor: </b>
+                {`${flavor?.name} 
+              ${new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
-              }).format(flavor?.price)}
-            </Text>
+              }).format(flavor?.price)}`}
+              </Text>
+            </Box>
           )}
           {currentSize && (
-            <Text>
-              {currentSize?.name}{" "}
-              {new Intl.NumberFormat("pt-BR", {
+            <Box margin={{ vertical: "small" }}>
+              <Text>
+                <b>Tamanho: </b>
+                {`${currentSize?.name} 
+              ${new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
-              }).format(currentSize.price)}
-            </Text>
+              }).format(currentSize.price)}`}
+              </Text>
+            </Box>
           )}
           {currentBorder && (
-            <Text>
-              {currentBorder?.name}{" "}
-              {new Intl.NumberFormat("pt-BR", {
+            <Box margin={{ vertical: "small" }}>
+              <Text>
+                <b>Borda: </b>
+
+                {`${currentBorder?.name} 
+              ${new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
-              }).format(currentBorder?.price)}
-            </Text>
+              }).format(currentBorder?.price)}`}
+              </Text>
+            </Box>
           )}
         </>
       )}

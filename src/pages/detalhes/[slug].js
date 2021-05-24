@@ -1,17 +1,14 @@
-import { useContext, useEffect, useState } from "react";
-import { Box, Heading, Spinner, Tab, Tabs, Text } from "grommet";
-import { useMutation, useQuery } from "react-query";
+import { useContext, useEffect } from "react";
+import { Box, Text } from "grommet";
 import { api } from "../../service/api";
-import { queryClient } from "../../react-query/queryClient";
-import { validateToday } from "../../utils/validateToday";
-import { useUsers } from "../../service/hooks/useUsers";
 import { PizzaSize } from "../../components/PizzaSize";
 import { ProjectContext } from "../../context/projectContext";
 import { Bill } from "../../components/Bill";
 import { usePizzas } from "../../service/hooks/usePizzas";
 import { useRouter } from "next/router";
-import { GridTemplateList } from "../../components/PizzaList";
-import Image from "next/image";
+import { GridTemplateList } from "../../../styles/GridTemplateList";
+import { PizzaCard } from "../../components/PizzaCard";
+import { PizzaDetailsWrapper } from "../../../styles/PizzaDetailsWrapper";
 
 export default function Detalhes({ propsResponse }) {
   const router = useRouter();
@@ -20,85 +17,52 @@ export default function Detalhes({ propsResponse }) {
 
   const { step } = useContext(ProjectContext);
 
-  const { data: user } = useUsers();
-
-  const { isFetched } = usePizzas();
-
-  const updateUserPoints = useMutation(
-    async (user) => {
-      return await api.put(`/users/${user.id}`, {
-        ...user,
-        points: user.points + 50,
-        lastValidation: new Date().toISOString(),
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("users");
-      },
-    }
-  );
-
   const linked = pizzas?.flavors
     .filter((flavor) => flavor.slug === router.query.slug && flavor)[0]
     .linked.map((item) => pizzas?.flavors[item]);
 
-  function handleSelectLink(slug) {
+  const handleClickCard = (slug) => {
     router.push({
       pathname: "/detalhes/[slug]",
       query: { slug },
     });
-  }
+  };
 
   useEffect(() => {
     if (step.currentStep === 1) {
       return step.incrementStep();
     }
-    const updateUser = async () => updateUserPoints.mutateAsync(user);
-    if (isFetched && user && !validateToday(user.lastValidation)) {
-      return updateUser();
-    }
-  }, []);
+  }, [step.currentStep]);
 
   return (
-    <Box>
-      <Heading>{propsResponse.flavor.name}</Heading>
-      <Box direction="row" justify="between">
+    <Box
+      pad="medium"
+      margin={{
+        vertical: "medium",
+      }}
+    >
+      <PizzaDetailsWrapper direction="row" justify="around">
         <PizzaSize />
         <Bill />
-      </Box>
-
+      </PizzaDetailsWrapper>
       <Box
         direction="column"
         justify="center"
         fill
         margin={{ vertical: "2rem" }}
       >
-        <Heading margin={{ horizontal: "5rem" }} size="medium">
-          Produtos sugeridos
-        </Heading>
+        <Box height="xxsmall">
+          <Text size="xlarge" textAlign="center">
+            <b>Pizzas Relacionadas</b>
+          </Text>
+        </Box>
         <GridTemplateList>
           {linked?.map((flavor) => (
-            <Box
-              background="brand"
-              key={flavor.id}
-              width="medium"
-              height="medium"
-              pad="medium"
-              style={{ cursor: "pointer" }}
-              onClick={() => handleSelectLink(flavor.slug)}
-            >
-              <Text size="large" textAlign="center">
-                {flavor.name}
-              </Text>
-              <Image
-                priority
-                src={flavor.image}
-                width={150}
-                height={300}
-                quality={50}
-              />
-            </Box>
+            <PizzaCard
+              key={flavor.slug}
+              flavor={flavor}
+              handleClickCard={handleClickCard}
+            />
           ))}
         </GridTemplateList>
       </Box>
