@@ -8,24 +8,23 @@ yarn next start
 # or
 yarn next dev
 ```
-**Webapp para a compra de uma pizza.**
+** Webapp to build pizza. **
 
 ### Preview: 
 [Pizza Points](https://pizza-points.vercel.app)
 
 
-### Link do Mock do backend: 
+### Mocked backend: 
 [Backend - JSON-server](https://pizza-score.herokuapp.com/)
 
 
 ### Features
-- Resetar os dados com contador de pontos /reset
-- Compra feita em 3 etapas ( Escolha do sabor, escolha do tamanho e escolha da borda ).
-- Produto com oferta do dia vindo do backend.
-- Pizzas relacionadas vindo do backend são mostradas nos detalhes de um sabor.
-- Mantendo borda e tamanho selecionado caso o usuário não confirme a compra.
- - Montar pizza com oferta do dia ( Usuário ganha 50 pontos ao concluir a compra ).
-- Confirmação de compra com limpeza de valores de borda e tamanho.
+- Clear the points using the router /reset
+- Build the pizza with 3 steps ( Flavor step, pizza size and pizza board );
+- Products data should be receive from the backend;
+- Pizzas sugestions should be received from the backend;
+- Should show the daily pizza ( The user receive points when buy this one );
+- Should show a modal when finish the pizza build;
 
 ### Backlog
 - [ ] First render of details page is not working correctly. ( You need to refresh the page );
